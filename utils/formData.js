@@ -19,7 +19,7 @@ let getFormData = req => {
           });
           
           part.on('error', function(err) {
-              req.getPersist().getLogger().error( "Error in getformdata >> " + err);
+              console.error( "Error in getformdata >> " + err);
               return reject({
                   code: 400,
                   message: "Invalid data in post form"
@@ -32,7 +32,7 @@ let getFormData = req => {
         
         form.on('error', function(err) {
           
-          req.getPersist().getLogger().error( "Error in getformdata >> " + err);
+          console.error( "Error in getformdata >> " + err);
           return reject({
               code: 400,
               message: "Invalid data in post form"
