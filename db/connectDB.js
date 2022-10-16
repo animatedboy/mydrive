@@ -12,7 +12,8 @@ async function connectDB() {
         console.log("Connected successfully to mongo server");
         // Create index
         await db.collection("users").createIndex({ email: 1 });
-        await db.collection("files").createIndex({ folderId: 1 });
+        await db.collection("files").createIndex({ folderId: 1,userId:1 });
+        await db.collection("folders").createIndex({ userId: 1 });
         return db;
         // Init api
     } catch (e) {
