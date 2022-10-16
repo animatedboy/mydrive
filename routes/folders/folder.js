@@ -13,19 +13,23 @@ let chunkSize = 1024 * 1024;
 let folderController = () => {
     return {
         createFileInFolder: async (req, res) => {
-            let data = await getFormData(req);
-            let { userId } = req.user;
-            let { folderId } = req.params;
-            if (folderId) {
-                if (data.file.data.length < chunkSize) {
-                    fileClient.createFile({ fileName: data.file.filename, userId, folderId, chunks: data.file.data }, (err, data) => {
-                        response(err, data, res);
-                    });
+            try {
+                let data = await getFormData(req);
+                let { userId } = req.user;
+                let { folderId } = req.params;
+                if (folderId) {
+                    if (data.file.data.length < chunkSize) {
+                        fileClient.createFile({ fileName: data.file.filename, userId, folderId, chunks: data.file.data }, (err, data) => {
+                            response(err, data, res);
+                        });
+                    } else {
+                        res.status(400).send('file size is high')
+                    }
                 } else {
-                    res.status(400).send('file size is high')
+                    res.status(400).send('Required fields are missing [folderId]');
                 }
-            } else {
-                res.status(400).send('Required fields are missing [folderId]');
+            } catch (e) {
+                res.status(400).send('Required fields are missing [file,userId]');
             }
         },
         createFolder: (req, res) => {

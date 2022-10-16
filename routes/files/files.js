@@ -13,17 +13,21 @@ let chunkSize = 1024 * 1024;
 let fileContoller = () => {
     return {
         createFile: async (req, res) => {
-            let data = await getFormData(req);
-            let { userId } = req.user;
-            if (data.fileName && data.file.data.length && userId) {
-                if (data.file.data.length < chunkSize) {
-                    fileClient.createFile({ fileName: data.file.filename, userId, folderId: 'default', chunks: data.file.data }, (err, data) => {
-                        response(err, data, res);
-                    });
+            try {
+                let data = await getFormData(req);
+                let { userId } = req.user;
+                if (data.fileName && data.file.data.length && userId) {
+                    if (data.file.data.length < chunkSize) {
+                        fileClient.createFile({ fileName: data.file.filename, userId, folderId: 'default', chunks: data.file.data }, (err, data) => {
+                            response(err, data, res);
+                        });
+                    } else {
+                        res.status(400).send('file size is high')
+                    }
                 } else {
-                    res.status(400).send('file size is high')
+                    res.status(400).send('Required fields are missing [file,userId]');
                 }
-            } else {
+            } catch (e) {
                 res.status(400).send('Required fields are missing [file,userId]');
             }
         },
