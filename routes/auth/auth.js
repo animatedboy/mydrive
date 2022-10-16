@@ -38,7 +38,7 @@ let auth = () => {
         }
         },
         verify: (req,res,next) => { 
-            let token =  req?.headers?.authorization.split(" ")[1];
+            let token =  req?.headers?.authorization?.split(" ")[1];
             if(token){
                 userClient.verify({token},(err,data) => {
                     if (err) {
