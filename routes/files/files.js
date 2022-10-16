@@ -16,7 +16,7 @@ let fileContoller = () => {
             try {
                 let data = await getFormData(req);
                 let { userId } = req.user;
-                if (data.fileName && data.file.data.length && userId) {
+                if (data.file.fileName && data.file.data.length && userId) {
                     if (data.file.data.length < chunkSize) {
                         fileClient.createFile({ fileName: data.file.filename, userId, folderId: 'default', chunks: data.file.data }, (err, data) => {
                             response(err, data, res);
