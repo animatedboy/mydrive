@@ -1,0 +1,428 @@
+{
+	"info": {
+		"_postman_id": "52223a0d-1926-413f-8521-1dcbff9a8299",
+		"name": "MyDrive",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"prasad\",\n    \"email\":\"devi.prasad@email.com\",\n    \"password\":\"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"devi.prasad@email.com\",\n    \"password\":\"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateFile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fileName\":\"abcd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/api/file",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateFolder",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"folderName\":\"abcd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/api/folder",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"folder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateFileinFolder",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/dprasad/Downloads/sabarimala.pdf"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/api/folder/634c002498cece81a62a0477/file",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"folder",
+						"634c002498cece81a62a0477",
+						"file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFileInFolder",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/mydrive/api/folder/634c002498cece81a62a0477",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"folder",
+						"634c002498cece81a62a0477"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/api/folder/all",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"folder",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateFile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fileName\":\"abcd123.pdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/api/file/634c001c98cece81a62a0476",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"file",
+						"634c001c98cece81a62a0476"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateFolder",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"folderName\":\"abcd123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/api/folder/634be7979fff3eeb30fe2b9a",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"folder",
+						"634be7979fff3eeb30fe2b9a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "moveFile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fileName\" : \"abcd123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/api/file/634bedb734d3a3119728be22/move/default",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"file",
+						"634bedb734d3a3119728be22",
+						"move",
+						"default"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "downlaodFile",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRiYWY4ZDFlMTM2MzFiZjRkZWQ3MWIiLCJuYW1lIjoicHJhc2FkIiwiZW1haWwiOiJkZXZpLnByYXNhZEBlbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR0a0lSc0NSS0lPbXdHVDRCTGRqSHp1N2NNZ1VEQ28uajd2TGM2VEdBNzdtb3JJdThpbkVIRyIsImlhdCI6MTY2NTkwNTAxMSwiZXhwIjoxNjY5NTA1MDExfQ.dcM299OVExRxnuCDjYZQZcCONc1js5ZkMOCR_S8Ikm0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/mydrive/api/all",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mydrive",
+						"api",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
