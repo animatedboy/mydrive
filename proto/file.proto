@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+
+service FileService {
+    rpc getUserFilesAndFolder (getUserFileRequest) returns (getUserFilesResponse);
+    rpc createFile (createFileRequest) returns (createFileResponse);
+    rpc createFolder (createFolderRequest) returns (createFolderResponse);
+    rpc updateFile (updateFileRequest) returns (updateFileResponse);
+    rpc updateFolder (updateFolderRequest) returns (updateFolderResponse);
+    rpc moveFile (moveFileRequest) returns (moveFileResponse);
+    rpc downloadFile (downloadFileRequest) returns (downloadFileResponse);
+    rpc getFileFromFolder(getFolderRequest) returns (getFolderResponse);
+}
+
+message getUserFileRequest {
+    string userId = 1;
+}
+
+message file {
+    string fileName = 1;
+    string fileId = 2;
+    string createdTime = 3;
+    string lastModified = 4;
+}
+
+message folder {
+    string folderName = 1;
+    string folderId = 2;
+    string createdTime = 3;
+    string lastModified = 4;
+}
+
+message getUserFilesResponse {
+    repeated file files = 1;
+    repeated folder folders = 2;
+}
+
+message getFolderRequest{
+    string folderId = 1;
+    string userId = 2;
+}
+
+message getFolderResponse{
+    repeated file files = 1;
+}
+
+message createFileRequest {
+    string fileName = 1;
+    string folderId = 2;
+    string userId = 3 ;
+    bytes chunks = 4;
+}
+
+message createFileResponse{
+    string fileName = 1;
+    string fileId = 2;
+    string folderId = 3;
+    string createdTime = 4;
+    string lastModified = 5;
+}
+
+message createFolderRequest {
+    string folderName = 1;
+    string userId = 2;
+}
+
+message createFolderResponse {
+    string folderName = 1;
+    string folderId = 2;
+    string createdTime = 3;
+    string lastModified = 4;
+}
+
+message downloadFileRequest {
+    string fileId = 1;
+    string userId = 2;
+}
+
+message downloadFileResponse {
+     bytes content = 1;
+     string fileName = 2;
+}
+
+message moveFileRequest {
+    string fileId = 1;
+    string folderId = 2;
+    string userId = 3;
+    string fileName = 4;
+}
+
+message moveFileResponse {
+    string fileId = 1;
+    string folderId = 2;
+    string fileName = 3;
+    string lastModified = 4;
+}
+
+message updateFileRequest {
+    string fileName = 1;
+    string fileId = 2;
+    string userId = 3;
+ }
+ 
+ message updateFileResponse{
+     string fileName = 1;
+     string fileId = 2;
+     string lastModified = 4;
+ }
+ 
+ message updateFolderRequest {
+     string folderName = 1;
+     string folderId = 2;
+     string userId = 3;
+ }
+ 
+ message updateFolderResponse {
+     string folderName = 1;
+     string folderId = 2;
+     string lastModified = 4;
+ }
+
+
+
