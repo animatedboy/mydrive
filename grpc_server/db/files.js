@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
-const { v4 } = require('uuid')
+const { v4 } = require('uuid');
+const fileType = require('file-type');
 
 class FileAPI {
     constructor(db, grpc) {
@@ -13,7 +14,7 @@ class FileAPI {
             const dbFolders = this.db.collection('folders');
             let { userId } = call.request;
 
-            let files = await dbfiles.find({ userId, folderId: 'default' }, { _id: 1, fileName: 1, createdTime: 1, lastModified: 1 }).toArray();
+            let files = await dbfiles.find({ userId, folderId: 'default' }, { _id: 1, fileName: 1, createdTime: 1, lastModified: 1, type: 1 }).toArray();
             let folders = await dbFolders.find({ userId: call.request.userId }, { _id: 1, folderName: 1, createdTime: 1, lastModified: 1 }).toArray();
 
             files = files.map((file) => {
@@ -37,12 +38,18 @@ class FileAPI {
             let { fileName, folderId, userId, chunks } = call.request;
             let createdTime = new Date(), lastModified = new Date();
             let dupFile = await file.findOne({ fileName, folderId, userId });
-            if (!dupFile) {
-                let res = await file.insertOne({ fileName, folderId, content: chunks, userId, createdTime, lastModified });
-                callback(null, { fileName, folderId, fileId: res.insertedId, createdTime: createdTime.toISOString(), lastModified: lastModified.toISOString() });
+            let {mime} = await fileType.fromBuffer(chunks);
+            if (mime === 'image/jpeg') {
+                if (!dupFile) {
+                    let res = await file.insertOne({ fileName, folderId, content: chunks, userId, type: mime, createdTime, lastModified });
+                    callback(null, { fileName, folderId, fileId: res.insertedId, createdTime: createdTime.toISOString(),type: mime, lastModified: lastModified.toISOString() });
+                } else {
+                    callback({ code: 400, message: 'file with same name found' });
+                }
             } else {
-                callback({ code: 400, message: 'file with same name found' });
+                callback({ code: 400, message: `File type ${mime} not supported. 'image/jpeg' type only supported` });
             }
+
         } catch (e) {
             callback({ code: 500, message: e })
         }
@@ -54,7 +61,7 @@ class FileAPI {
             const folders = this.db.collection("folders");
             let { folderName, userId } = call.request;
             let createdTime = new Date(), lastModified = new Date();
-            let dupFolder = await folders.findOne({ folderName , userId});
+            let dupFolder = await folders.findOne({ folderName, userId });
             if (!dupFolder) {
                 let res = await folders.insertOne({ folderName, userId, createdTime: createdTime.toISOString(), lastModified: lastModified.toISOString() });
                 callback(null, { folderName, folderId: res.insertedId, createdTime, lastModified });
@@ -70,20 +77,26 @@ class FileAPI {
     updateFile = async (call, callback) => {
         try {
             const files = this.db.collection("files");
-            let { fileId, userId, fileName } = call.request;
+            let { fileId, userId, fileName, chunks } = call.request;
             let lastModified = new Date();
-            let dupFile = await files.findOne({ fileName,userId });
-            if (!dupFile) {
-                let query = { _id: ObjectId(fileId) }
-                let res = await files.updateOne({ ...query, userId }, { $set: { fileName, lastModified } });
-                if (res.matchedCount && res.modifiedCount) {
-                    callback(null, { fileId, fileName, lastModified: lastModified.toISOString() });
-                }
-                else {
-                    callback({ code: 400, message: "No content found for the given query" })
+            let dupFile = await files.findOne({ fileName, userId });
+            let {mime} = await fileType.fromBuffer(chunks);
+            if (mime === 'image/jpeg') {
+
+                if (!dupFile) {
+                    let query = { _id: ObjectId(fileId) }
+                    let res = await files.updateOne({ ...query, userId }, { $set: { fileName, lastModified, content: chunks,type:mime } });
+                    if (res.matchedCount && res.modifiedCount) {
+                        callback(null, { fileId, fileName,type: mime, lastModified: lastModified.toISOString() });
+                    }
+                    else {
+                        callback({ code: 400, message: "No content found for the given query" })
+                    }
+                } else {
+                    callback({ code: 400, message: 'file with same name found' });
                 }
             } else {
-                callback({ code: 400, message: 'file with same name found' });
+                callback({ code: 400, message: `File type ${mime} not supported. 'image/jpeg' type only supported` });
             }
         } catch (e) {
             callback({ code: 500, message: e })
@@ -95,7 +108,7 @@ class FileAPI {
             const folders = this.db.collection("folders");
             let { folderName, userId, folderId } = call.request;
             let lastModified = new Date();
-            let dupFolder = await folders.findOne({ folderName,userId });
+            let dupFolder = await folders.findOne({ folderName, userId });
             if (!dupFolder) {
                 let query = { _id: ObjectId(folderId) }
                 let res = await folders.updateOne({ ...query, userId }, { $set: { folderName, lastModified } });
@@ -118,7 +131,7 @@ class FileAPI {
             const files = this.db.collection("files");
             let { fileId, folderId, fileName, userId } = call.request;
             let lastModified = new Date();
-            let dupFile = await files.findOne({ fileName, folderId,userId });
+            let dupFile = await files.findOne({ fileName, folderId, userId });
             if (!dupFile) {
                 let res = await files.updateOne({ _id: ObjectId(fileId), userId }, { $set: { folderId, lastModified } });
                 if (res.matchedCount && res.modifiedCount) {

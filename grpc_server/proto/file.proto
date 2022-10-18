@@ -21,6 +21,7 @@ message file {
     string fileId = 2;
     string createdTime = 3;
     string lastModified = 4;
+    string type = 5;
 }
 
 message folder {
@@ -57,6 +58,7 @@ message createFileResponse{
     string folderId = 3;
     string createdTime = 4;
     string lastModified = 5;
+    string type = 6;
 }
 
 message createFolderRequest {
@@ -99,6 +101,7 @@ message updateFileRequest {
     string fileName = 1;
     string fileId = 2;
     string userId = 3;
+    bytes chunks = 4;
  }
  
  message updateFileResponse{

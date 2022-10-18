@@ -31,17 +31,26 @@ let fileContoller = () => {
                 res.status(400).send('Required fields are missing [file,userId]');
             }
         },
-        updateFile: (req, res) => {
-            let { fileName } = req.body;
+        updateFile: async (req, res) => {
+            try{
+            let data = await getFormData(req);
             let { fileId } = req.params;
             let { userId } = req.user;
-            if (fileName && fileId) {
-                fileClient.updateFile({ fileName, fileId, userId }, (err, data) => {
-                    response(err, data, res);
-                });
+
+            if (data.file.filename && data.file.data.length && userId) {
+                if (data.file.data.length < chunkSize) {
+                    fileClient.updateFile({ fileName: data.file.filename, userId, fileId, chunks: data.file.data }, (err, data) => {
+                        response(err, data, res);
+                    });
+                } else {
+                    res.status(400).send('file size is high')
+                }
             } else {
                 res.status(400).send('Required fields are missing [fileName,fileId]');
             }
+        } catch (e) {
+            res.status(400).send('Required fields are missing [file,userId]');
+        }
         },
         moveFile: (req, res) => {
             let { fileId, folderId } = req.params;
@@ -61,7 +70,7 @@ let fileContoller = () => {
             if (fileId) {
                 fileClient.downloadFile({ fileId, userId }, (err, data) => {
                     if (err) {
-                        res.status(err?.code || 500).send(err.message);
+                        res.status(400).send(err.message);
                     } else {
                         res.set('Content-Disposition', `attachment; filename="${data.fileName}"`);
                         res.set('Content-Type', 'application/octet-stream');
