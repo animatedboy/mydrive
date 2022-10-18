@@ -1,6 +1,6 @@
 const PROTO_PATH = "./proto/mydrive.proto";
 
-const grpc = require("grpc");
+const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 const { connectDB } = require('./db/connectDB.js');
 const UserAPI = require('./db/user.js');

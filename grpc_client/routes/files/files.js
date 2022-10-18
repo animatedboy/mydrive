@@ -1,6 +1,6 @@
 let service = require('../../grpc_client.js');
 let { v4 } = require('uuid');
-let grpc = require('grpc');
+let grpc = require("@grpc/grpc-js");
 const getFormData = require('../../utils/formData.js');
 const response = require('../../utils/response.js');
 

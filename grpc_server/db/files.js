@@ -1,4 +1,3 @@
-const async = require('hbs/lib/async');
 const { ObjectId } = require('mongodb');
 const { v4 } = require('uuid')
 
@@ -37,7 +36,7 @@ class FileAPI {
             const file = this.db.collection("files");
             let { fileName, folderId, userId, chunks } = call.request;
             let createdTime = new Date(), lastModified = new Date();
-            let dupFile = await file.findOne({ fileName, folderId });
+            let dupFile = await file.findOne({ fileName, folderId, userId });
             if (!dupFile) {
                 let res = await file.insertOne({ fileName, folderId, content: chunks, userId, createdTime, lastModified });
                 callback(null, { fileName, folderId, fileId: res.insertedId, createdTime: createdTime.toISOString(), lastModified: lastModified.toISOString() });
@@ -55,7 +54,7 @@ class FileAPI {
             const folders = this.db.collection("folders");
             let { folderName, userId } = call.request;
             let createdTime = new Date(), lastModified = new Date();
-            let dupFolder = await folders.findOne({ folderName });
+            let dupFolder = await folders.findOne({ folderName , userId});
             if (!dupFolder) {
                 let res = await folders.insertOne({ folderName, userId, createdTime: createdTime.toISOString(), lastModified: lastModified.toISOString() });
                 callback(null, { folderName, folderId: res.insertedId, createdTime, lastModified });
@@ -73,7 +72,7 @@ class FileAPI {
             const files = this.db.collection("files");
             let { fileId, userId, fileName } = call.request;
             let lastModified = new Date();
-            let dupFile = await files.findOne({ fileName });
+            let dupFile = await files.findOne({ fileName,userId });
             if (!dupFile) {
                 let query = { _id: ObjectId(fileId) }
                 let res = await files.updateOne({ ...query, userId }, { $set: { fileName, lastModified } });
@@ -96,7 +95,7 @@ class FileAPI {
             const folders = this.db.collection("folders");
             let { folderName, userId, folderId } = call.request;
             let lastModified = new Date();
-            let dupFolder = await folders.findOne({ folderName });
+            let dupFolder = await folders.findOne({ folderName,userId });
             if (!dupFolder) {
                 let query = { _id: ObjectId(folderId) }
                 let res = await folders.updateOne({ ...query, userId }, { $set: { folderName, lastModified } });
@@ -119,7 +118,7 @@ class FileAPI {
             const files = this.db.collection("files");
             let { fileId, folderId, fileName, userId } = call.request;
             let lastModified = new Date();
-            let dupFile = await files.findOne({ fileName, folderId });
+            let dupFile = await files.findOne({ fileName, folderId,userId });
             if (!dupFile) {
                 let res = await files.updateOne({ _id: ObjectId(fileId), userId }, { $set: { folderId, lastModified } });
                 if (res.matchedCount && res.modifiedCount) {

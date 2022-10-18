@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+
+service UserService {
+    rpc register (RegisterRequest) returns (UserResponse);
+    rpc login (LoginRequest) returns (UserResponse);
+    rpc verify (VerifyRequest) returns (VerifyResponse);
+    rpc getUser (GetUserRequest) returns (VerifyResponse);
+}
+
+message VerifyRequest {
+    string token = 1;
+}
+
+message GetUserRequest {
+    string userId = 1;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message RegisterRequest {
+    string name = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message UserResponse {
+    string userId = 1;
+    string name = 2;
+    string email = 3;
+    string token = 4;
+}
+
+message VerifyResponse {
+    string userId = 1;
+    string name = 2;
+    string email = 3;
+}

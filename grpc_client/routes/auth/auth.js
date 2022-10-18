@@ -1,6 +1,6 @@
 let service = require('../../grpc_client.js');
 let {v4} = require('uuid');
-let grpc = require('grpc');
+let grpc = require("@grpc/grpc-js");
 
 let userClient  = new service.UserService(
     "0.0.0.0:50051",
@@ -25,7 +25,7 @@ let auth = () => {
         },
         registerUser: (req,res) => { 
             let {name, email, password } = req.body;
-            if(name && email && pasword){
+            if(name && email && password){
             userClient.register({ name, email, password }, (err, data) => {
                 if (err) {
                     res.status(400).send(err);
